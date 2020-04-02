@@ -8,6 +8,9 @@ plugins:
   - serverless-offline
   - serverless-dotenv-plugin
 
+resources:
+  - ${file(resources/api-gateway-errors.yml)}
+
 provider:
   name: aws
   runtime: nodejs10.x
@@ -16,6 +19,7 @@ provider:
 
   environment:
     tableName: ${env:TABLE_NAME}
+    stripeSecretKey: ${env:STRIPE_SECRET_KEY}
 
   iamRoleStatements:
     - Effect: Allow
@@ -68,5 +72,14 @@ functions:
       - http:
           path: ${env:TABLE_NAME}/{id}
           method: delete
+          cors: true
+          authorizer: aws_iam
+
+  billing:
+    handler: billing.main
+    events:
+      - http:
+          path: billing
+          method: post
           cors: true
           authorizer: aws_iam
