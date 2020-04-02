@@ -2,15 +2,14 @@
   "name": "backoffice-app-total",
   "version": "1.1.0",
   "description": "A Node.js starter for the Serverless Framework with async/await and unit test support",
-  "main": "handler.js",
   "scripts": {
     "test": "serverless-bundle test"
   },
-  "author": "",
+  "author": "Kleyson Morais de Sousa",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AnomalyInnovations/serverless-nodejs-starter.git"
+    "url": "https://github.com/kleysonmorais/serverless-stack-api"
   },
   "devDependencies": {
     "aws-sdk": "^2.650.0",

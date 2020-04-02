@@ -14,31 +14,31 @@ resources:
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: dev
+  stage: prod
   region: us-east-1
 
   environment:
-    tableName: ${env:TABLE_NAME}
+    tableName: columnist
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
 
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb: DescribeTable
-        - dynamodb: Query
-        - dynamodb: Scan
-        - dynamodb: GetItem
-        - dynamodb: PutItem
-        - dynamodb: UpdateItem
-        - dynamodb: DeleteItem
-      Resource: ${env:ARN_DYNAMO_DB}
+  # iamRoleStatements:
+  #   - Effect: Allow
+  #     Action:
+  #       - dynamodb: DescribeTable
+  #       - dynamodb: Query
+  #       - dynamodb: Scan
+  #       - dynamodb: GetItem
+  #       - dynamodb: PutItem
+  #       - dynamodb: UpdateItem
+  #       - dynamodb: DeleteItem
+  #     Resource: "arn:aws:dynamodb:us-east-1:754156944485:table/columnist"
 
 functions:
   create:
     handler: create.main
     events:
       - http:
-          path: ${env:TABLE_NAME}
+          path: columnist
           method: post
           cors: true
           authorizer: aws_iam
@@ -46,7 +46,7 @@ functions:
     handler: get.main
     events:
       - http:
-          path: ${env:TABLE_NAME}/{id}
+          path: columnist/{id}
           method: get
           cors: true
           authorizer: aws_iam
@@ -54,7 +54,7 @@ functions:
     handler: list.main
     events:
       - http:
-          path: ${env:TABLE_NAME}
+          path: columnist
           method: get
           cors: true
           authorizer: aws_iam
@@ -62,7 +62,7 @@ functions:
     handler: update.main
     events:
       - http:
-          path: ${env:TABLE_NAME}/{id}
+          path: columnist/{id}
           method: put
           cors: true
           authorizer: aws_iam
@@ -70,11 +70,10 @@ functions:
     handler: delete.main
     events:
       - http:
-          path: ${env:TABLE_NAME}/{id}
+          path: columnist/{id}
           method: delete
           cors: true
           authorizer: aws_iam
-
   billing:
     handler: billing.main
     events:
