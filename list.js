@@ -4,18 +4,21 @@ import { success, failure } from "./libs/response-lib";
 export async function main(event) {
   const params = {
     TableName: process.env.tableName,
-    KeyConditionExpression: "userId = :userId",
-    ExpressionAttributeValues: {
-      ":userId": event.requestContext.identity.cognitoIdentityId
+  };
+
+  const onScan = (err) => {
+    if (err) {
+      console.error(
+        "Unable to scan the table. Error JSON:",
+        JSON.stringify(err, null, 2)
+      );
     }
   };
 
   try {
-    const result = await dynamoDbLib.call("query", params);
+    const result = await dynamoDbLib.call("scan", [params, onScan]);
     return success(result.Items);
   } catch (e) {
-    console.log(e);
-
     return failure({ status: false });
   }
 }

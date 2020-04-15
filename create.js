@@ -9,14 +9,17 @@ export async function main(event) {
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
       columnistId: uuidv4(),
-      content: data.content,
+      firstName: data.firstName,
+      lastName: data.lastName,
       attachment: data.attachment,
-      createAt: Date.now()
-    }
+      id: data.id,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    },
   };
 
   try {
-    await dynamoDbLib.call("put", params);
+    await dynamoDbLib.call("put", [params]);
     return success(params.Item);
   } catch (e) {
     return failure({ status: false });

@@ -1,5 +1,5 @@
 {
-  "body": "{\"content\":\"Kleyson Morais de Sousa\",\"attachment\":\"hello.jpg\"}",
+  "body": "{\"firstName\":\"Anderson\",\"lastName\":\"Silva\",\"attachment\":\"anderson.jpg\",\"id\":195}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"

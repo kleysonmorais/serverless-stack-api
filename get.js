@@ -6,12 +6,12 @@ export async function main(event) {
     TableName: process.env.tableName,
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      columnistId: event.pathParameters.id
-    }
+      columnistId: event.pathParameters.id,
+    },
   };
 
   try {
-    const result = await dynamoDbLib.call("get", params);
+    const result = await dynamoDbLib.call("get", [params]);
     if (result.Item) {
       return success(result.Item);
     } else {

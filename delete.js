@@ -6,11 +6,11 @@ export async function main(event) {
     TableName: process.env.tableName,
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      columnistId: event.pathParameters.id
-    }
+      columnistId: event.pathParameters.id,
+    },
   };
   try {
-    await dynamoDbLib.call("delete", params);
+    await dynamoDbLib.call("delete", [params]);
     return success({ status: true });
   } catch (e) {
     return failure({ status: false });
