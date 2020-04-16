@@ -30,11 +30,8 @@ provider:
   stage: dev
   region: us-east-1
 
-  # These environment variables are made available to our functions
-  # under process.env.
   environment:
     tableName: ${self:custom.tableName}
-    # stripeSecretKey: ${env:STRIPE_SECRET_KEY}
 
   iamRoleStatements:
     - Effect: Allow
@@ -92,3 +89,10 @@ functions:
           method: delete
           cors: true
           authorizer: aws_iam
+  public-list:
+    handler: public-list.main
+    events:
+      - http:
+          path: columnists
+          method: get
+          cors: false
